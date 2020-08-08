@@ -54,9 +54,39 @@ void run_tests() {
 	test(memory, correct, 3);
 }
 
-int main() {
-	run_tests();
+/*int main() {
+	//run_tests();
 
 	system("pause");
+	return 0;
+}*/
+
+#include <SFML/Graphics.hpp>
+
+int main()
+{
+	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	sf::CircleShape shape(10.f);
+	shape.setFillColor(sf::Color::Green);
+	shape.setOrigin(10, 10);
+
+	float t = 1;
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		window.clear();
+		window.draw(shape);
+		shape.setScale(t, t);
+		t *= 1.00001;
+		window.display();
+	}
+
 	return 0;
 }
