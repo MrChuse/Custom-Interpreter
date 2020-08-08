@@ -34,25 +34,28 @@ int test(std::vector<int> memory, std::vector<std::vector<int>> correct, int id)
 	}
 }
 
-
-int main() {
+void run_tests() {
 	std::cout << "HELLO WORLD------------------------------------------" << std::endl;
 
 	std::vector<int> memory = { 0, 0, 0, 1, 10 };
-	std::vector< std::vector<int> > correct = { {0}, {0}, {0}, {1, 10}, {0}, {0}, {0}, {1, 10} };
+	std::vector< std::vector<int> > correct = { { 0 },{ 0 },{ 0 },{ 1, 10 },{ 0 },{ 0 },{ 0 },{ 1, 10 } };
 	test(memory, correct, 1);
-	
-	memory = {0};
-	correct = { { 0 }, { 0 }, { 0 }, { 0 } };
+
+	memory = { 0 };
+	correct = { { 0 },{ 0 },{ 0 },{ 0 } };
 	test(memory, correct, 2);
 
 	memory = { 11, 0, 0, 1 };
-	correct = { { 0 }, { 0 }, { 1, 11 }, { 0 }, {0}, {1, 11} };
+	correct = { { 0 },{ 0 },{ 1, 11 },{ 0 },{ 0 },{ 1, 11 } };
 	test(memory, correct, 2);
 
 	memory = { 2, 0 };
-	correct = { {2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2}, {0} };
+	correct = { { 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },{ 0 } };
 	test(memory, correct, 3);
+}
+
+int main() {
+	run_tests();
 
 	system("pause");
 	return 0;
