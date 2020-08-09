@@ -1,7 +1,8 @@
 #include "custom_interpreter.h"
+#include "field.h"
 #include <iostream>
 
-int test(std::vector<int> memory, std::vector<std::vector<int>> correct, int id) {
+int test_interpreter(std::vector<int> memory, std::vector<std::vector<int>> correct, int id) {
 	std::cout << id << std::endl;
 	Command photosynthesis = Command(0, true, nullptr);
 	Command eat = Command(1, true, nullptr);
@@ -32,36 +33,84 @@ int test(std::vector<int> memory, std::vector<std::vector<int>> correct, int id)
 			return -1;
 		}
 	}
+	return 0;
 }
 
-void run_tests() {
-	std::cout << "HELLO WORLD------------------------------------------" << std::endl;
+int test_temperature(int id) {
+	std::cout << id << std::endl;
+	Field f = Field(10, 10, 100);
+	std::vector<int> correct = { 0, 6, 12, 19, 25, 32, 38, 44, 51, 57 };
+	std::vector<std::vector<Cell>> field = f.get_field();
+	for (int i = 0; i < 10; i++) {
+		if (field[i][i].get_temperature() != correct[i]) {
+			std::cout << "Incorrect! Correct was " << correct[i] << " but output was " << field[i][0].get_temperature() << std::endl;
+		}
+	}
+	return 0;
+}
+
+int test_agents_empty(int id) {
+	std::cout << id << std::endl;
+	Field f = Field(10, 10, 100);
+	std::vector<std::vector<Cell>> field = f.get_field();
+
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			if (field[i][j].is_occupied()) {
+				std::cout << "Somehow " << i << ", " << j << " is occupied" << std::endl;
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
+
+void test_case_interpreter() {
+	std::cout << "interpreter tests started" << std::endl;
 
 	std::vector<int> memory = { 0, 0, 0, 1, 10 };
 	std::vector< std::vector<int> > correct = { { 0 },{ 0 },{ 0 },{ 1, 10 },{ 0 },{ 0 },{ 0 },{ 1, 10 } };
-	test(memory, correct, 1);
+	test_interpreter(memory, correct, 1);
 
 	memory = { 0 };
 	correct = { { 0 },{ 0 },{ 0 },{ 0 } };
-	test(memory, correct, 2);
+	test_interpreter(memory, correct, 2);
 
 	memory = { 11, 0, 0, 1 };
 	correct = { { 0 },{ 0 },{ 1, 11 },{ 0 },{ 0 },{ 1, 11 } };
-	test(memory, correct, 2);
+	test_interpreter(memory, correct, 3);
 
 	memory = { 2, 0 };
 	correct = { { 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },{ 0 } };
-	test(memory, correct, 3);
+	test_interpreter(memory, correct, 4);
+
+	std::cout << "interpreter tests ended" << std::endl << std::endl;
 }
 
-/*int main() {
-	//run_tests();
+void test_case_field() {
+	std::cout << "Field tests started" << std::endl;
+	
+	test_temperature(1);
+
+	std::cout << "Field tests ended" << std::endl << std::endl;
+}
+
+void run_tests() {
+	std::cout << "-------------------tests started-----------------------" << std::endl;
+
+	test_case_interpreter();
+
+	test_case_field();
+}
+
+int main() {
+	run_tests();
 
 	system("pause");
 	return 0;
-}*/
+}
 
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 
 int main()
 {
@@ -89,4 +138,4 @@ int main()
 	}
 
 	return 0;
-}
+}*/
