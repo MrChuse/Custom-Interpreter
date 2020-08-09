@@ -1,8 +1,9 @@
 #include "custom_interpreter.h"
-Interpreter::Interpreter(const std::vector<int> memory, const std::vector<Command> commands, const int limit) {
+Interpreter::Interpreter(const std::vector<int> memory, const std::vector<Command> commands, const int max_value, const int limit) {
 	this->memory = std::vector<int>(memory);
 	this->commands = std::vector<Command>(commands);
 	this->limit = limit;
+	this->max_value = max_value;
 
 	pointer = 0;
 }
@@ -24,7 +25,7 @@ std::vector<int> Interpreter::make_a_move(SensorData data) {
 		int left = pointer;
 		int right = pointer + commands[current_command_id].parameters_number + 1; // +1 to compensate for right boundary
 
-																				  // copy the command id and its arguments to return
+		// copy the command id and its arguments to return
 		std::vector<int> command_and_arguments = std::vector<int>(right - left);
 		command_and_arguments.clear();
 		if (right < memory.size()) {
@@ -65,4 +66,22 @@ std::vector<int> Interpreter::make_a_move(SensorData data) {
 	}
 
 	return std::vector<int>(1, 0);
+}
+
+void Interpreter::mutate(MutationSettings settings) { return; }
+
+bool Interpreter::check_ally(Brain* other) { return false; }
+
+int Interpreter::get_size() { return memory.size(); }
+
+void Interpreter::set_memory_at(int index, int value) {
+	memory[index] = value % max_value;
+}
+
+void Interpreter::increase_memory_at(int index, int amt) {
+	memory[index] = (memory[index] + amt) % max_value;
+}
+
+void Interpreter::decrease_memory_at(int index, int amt) {
+	memory[index] = (memory[index] + max_value - amt) % max_value;
 }

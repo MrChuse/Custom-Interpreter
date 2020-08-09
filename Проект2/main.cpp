@@ -4,14 +4,14 @@
 
 int test_interpreter(std::vector<int> memory, std::vector<std::vector<int>> correct, int id) {
 	std::cout << id << std::endl;
-	Command photosynthesis = Command(0, true, nullptr);
-	Command eat = Command(1, true, nullptr);
-	Command com10 = Command(10, true, nullptr);
+	Command photosynthesis(0, true, nullptr);
+	Command eat(1, true, nullptr);
+	Command com10(10, true, nullptr);
 
 	std::vector<Command> commands = { photosynthesis, eat, com10 };
 	SensorData data;
 
-	Interpreter brain = Interpreter(memory, commands, 10);
+	Interpreter brain(memory, commands, 64, 10);
 	for (int i = 0; i < correct.size(); i++) {
 		std::vector<int> ans = brain.make_a_move(data);
 

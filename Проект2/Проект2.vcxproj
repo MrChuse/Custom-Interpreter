@@ -121,13 +121,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h" />
+    <ClInclude Include="brain.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="custom_interpreter.h" />
     <ClInclude Include="draw.h" />
-    <ClInclude Include="sensor_data.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

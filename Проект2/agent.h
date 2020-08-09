@@ -1,12 +1,14 @@
 #ifndef AGENT
 #define AGENT
 
+#include "custom_interpreter.h"
+
 class Agent {
 public:
 	int x;
 	int y;
 	int energy = 0;
-	Agent(int brain) : brain(brain){
+	Agent(int x, int y, int energy, int energy_cap, Brain* brain) : x(x), y(y), energy(energy), energy_cap(energy_cap), brain(brain){
 
 	}
 
@@ -16,8 +18,9 @@ public:
 		return x - x1 >= -radius || x - x1 <= radius || y - y1 >= -radius || y - y1 <= radius;
 	}
 private:
-	int brain;
 	int radius;
+	int energy_cap;
+	Brain* brain;
 };
 
 #endif

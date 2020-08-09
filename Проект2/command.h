@@ -1,7 +1,7 @@
 #ifndef COMMAND
 #define COMMAND
 
-#include "sensor_data.h"
+#include "brain.h"
 
 class Command {
 public:

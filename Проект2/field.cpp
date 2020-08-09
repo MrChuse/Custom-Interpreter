@@ -94,5 +94,3 @@ std::vector<Cell*> Field::get_sensor_data(Agent* agent) {
 	}
 	return sensor_data;
 }
-
-void

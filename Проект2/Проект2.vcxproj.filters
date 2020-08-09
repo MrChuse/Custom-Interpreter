@@ -32,9 +32,6 @@
     <ClInclude Include="command.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
-    <ClInclude Include="sensor_data.h">
-      <Filter>Файлы исходного кода</Filter>
-    </ClInclude>
     <ClInclude Include="draw.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
@@ -48,6 +45,9 @@
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
     <ClInclude Include="cell.h">
+      <Filter>Файлы исходного кода</Filter>
+    </ClInclude>
+    <ClInclude Include="brain.h">
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
   </ItemGroup>
