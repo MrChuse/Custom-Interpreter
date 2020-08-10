@@ -5,6 +5,10 @@
 #include "command.h"
 #include "brain.h"
 
+class InterpreterMutationSettings : public MutationSettings {
+	float change_weight_probability = 0.1;
+};
+
 class Interpreter : public Brain {
 public:
 
@@ -12,7 +16,7 @@ public:
 
 	std::vector<int> make_a_move(SensorData data) override;
 
-	void mutate(MutationSettings settings) override;
+	void mutate(MutationSettings* settings) override;
 
 	bool check_ally(Brain* other) override;
 

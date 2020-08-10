@@ -68,7 +68,9 @@ std::vector<int> Interpreter::make_a_move(SensorData data) {
 	return std::vector<int>(1, 0);
 }
 
-void Interpreter::mutate(MutationSettings settings) { return; }
+void Interpreter::mutate(MutationSettings* settings) { 
+	
+}
 
 bool Interpreter::check_ally(Brain* other) { return false; }
 
