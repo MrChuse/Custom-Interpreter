@@ -1,4 +1,5 @@
 #include "custom_interpreter.h"
+#include "field.h" // wtf this isn't right (I need it to get Cell* in make_a_move)
 Interpreter::Interpreter(const std::vector<int> memory, const std::vector<Command> commands, const int max_value, const int limit) {
 	this->memory = std::vector<int>(memory);
 	this->commands = std::vector<Command>(commands);
@@ -8,7 +9,7 @@ Interpreter::Interpreter(const std::vector<int> memory, const std::vector<Comman
 	pointer = 0;
 }
 
-std::vector<int> Interpreter::make_a_move(SensorData data) {
+std::vector<int> Interpreter::make_a_move(std::vector<Cell*> data) {
 
 	// execute no more than *limit* non-final commands
 	int command_counter = 0;
@@ -68,11 +69,27 @@ std::vector<int> Interpreter::make_a_move(SensorData data) {
 	return std::vector<int>(1, 0);
 }
 
-void Interpreter::mutate(MutationSettings* settings) { 
-	
+void Interpreter::mutate(int number_of_brain_changes, float change_gene_probability, float change_brain_size_probability, int max_brain_size_change) {
+	for (int i = 0; i < number_of_brain_changes; i++) {
+		if (random() < change_gene_probability) {
+			int gene = int(random() * memory.size());
+			memory[gene] = int(random() * max_value);
+			if (random() < change_brain_size_probability) {
+				int dsize = int(random() * (2 * max_brain_size_change + 1)) - max_brain_size_change;
+				if (dsize == 0)
+					return;
+				if (dsize > 0)
+					for (int j = 0; j < dsize; j++)
+						memory.push_back(int(random() * max_value));
+				else
+					for (int j = 0; j < dsize; j++)
+						memory.erase(memory.begin() + int(random() * memory.size()));
+			}
+		}
+	}
 }
 
-bool Interpreter::check_ally(Brain* other) { return false; }
+bool Interpreter::check_ally(Interpreter* other) { return false; }
 
 int Interpreter::get_size() { return memory.size(); }
 
@@ -86,4 +103,8 @@ void Interpreter::increase_memory_at(int index, int amt) {
 
 void Interpreter::decrease_memory_at(int index, int amt) {
 	memory[index] = (memory[index] + max_value - amt) % max_value;
+}
+
+float Interpreter::random() {
+	return 1.f * rand() / RAND_MAX;
 }

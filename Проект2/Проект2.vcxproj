@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="custom_interpreter.cpp" />
     <ClCompile Include="field.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +125,7 @@
     <ClInclude Include="brain.h" />
     <ClInclude Include="cell.h" />
     <ClInclude Include="field.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="custom_interpreter.h" />

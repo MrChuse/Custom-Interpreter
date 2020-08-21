@@ -9,7 +9,7 @@ int test_interpreter(std::vector<int> memory, std::vector<std::vector<int>> corr
 	Command com10(10, true, nullptr);
 
 	std::vector<Command> commands = { photosynthesis, eat, com10 };
-	SensorData data;
+	std::vector<Cell*> data;
 
 	Interpreter brain(memory, commands, 64, 10);
 	for (int i = 0; i < correct.size(); i++) {
@@ -65,6 +65,53 @@ int test_agents_empty(int id) {
 	return 0;
 }
 
+int test_agent_spawn_photo_move(int id) {
+	std::cout << id << std::endl;
+	Field f = Field(10, 10, 100);
+
+	Command do_nothing(0, true);
+	Command photosynthesis(0, true);
+	Command eat(1, true);
+	Command com10(10, true);
+
+	std::vector<Command> commands = { do_nothing, photosynthesis, eat, com10 };
+	std::vector<int> memory = { 0 };
+	Interpreter b(memory, commands, 64, 10);
+	auto a = new Agent(0, 4, 1, 100, 256, b);
+	f.spawn_agent(a, 0, 4);
+	auto v = f.get_field();
+
+	f.photosynthesis(a);
+	if (a->energy != 164) {
+		std::cout << "Energy after photosythesis is not 164, it is " << a->energy << std::endl;
+		return -1;
+	}
+
+	f.move_agent(a, 0, 6);
+	v = f.get_field();
+	if (a->x != 0 || a->y != 4) {
+		std::cout << "after illegally moving the agent, he really moved to " << a->x << ", " << a->y << std::endl;
+		//return -1;
+	}
+	if (v[0][6].agent != nullptr || (v[0][4].agent != a)) {
+		std::cout << "there's something wring with pointers after illegal move" << std::endl;
+		//return -1;
+	}
+
+
+	f.move_agent(a, 0, 5);
+	v = f.get_field();
+	if (a->x != 0 || a->y != 5) {
+		std::cout << "after legally moving the agent, he didn't really moved and stayed at " << a->x << ", " << a->y << std::endl;
+		return -1;
+	}
+	if (v[0][5].agent != a || (v[0][4].agent != nullptr)) {
+		std::cout << "there's something wring with pointers after legal move" << std::endl << a << " a, " << v[0][4].agent<< " 4th cell, " << v[0][5].agent << " 5th cell." << std::endl;
+		return -1;
+	}
+	delete a;
+	return 0;
+}
 void test_case_interpreter() {
 	std::cout << "interpreter tests started" << std::endl;
 
@@ -91,6 +138,10 @@ void test_case_field() {
 	std::cout << "Field tests started" << std::endl;
 	
 	test_temperature(1);
+
+	test_agents_empty(2);
+
+	test_agent_spawn_photo_move(3);
 
 	std::cout << "Field tests ended" << std::endl << std::endl;
 }
